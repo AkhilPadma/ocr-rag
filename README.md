@@ -17,28 +17,11 @@ Built as a portfolio project targeting the Monotype Solutions Research Engineer 
 ---
 
 ## Architecture
+<img width="1472" height="1520" alt="image" src="https://github.com/user-attachments/assets/58506e4f-6ae9-446b-920a-d32d8420f68e" />
 
-```
-PDF Upload
-    │
-    ▼
-OCR Pipeline (PyMuPDF + OpenCV preprocessing + pytesseract)
-    │
-    ├── Text path: chunks → BGE-small embeddings → Chroma
-    │                        BM25 sparse index
-    │
-    └── Image path: page images → CLIP embeddings → Chroma
-    │
-    ▼
-LLM Query Router (Groq qwen3.8-27b)
-    │
-    ├── TEXT  → Hybrid Retrieval (BGE + BM25 + RRF) → Cross-Encoder Reranking → LLM Answer
-    ├── IMAGE → CLIP similarity search → Retrieved page images
-    └── BOTH  → Both paths merged
-    │
-    ▼
-Streamlit UI (answer + page citations + specimen images)
-```
+<img width="992" height="587" alt="image" src="https://github.com/user-attachments/assets/ccaf9db9-3f4d-4f3a-b609-afbb0e1def83" />
+
+
 
 ---
 
