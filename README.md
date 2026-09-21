@@ -26,24 +26,6 @@ Built as a portfolio project targeting the Monotype Solutions Research Engineer 
 
 ---
 
-## Key engineering decisions and tradeoffs
-
-**OCR preprocessing — why not just pytesseract directly?**
-The corpus is aged sepia-toned scans. Raw Otsu binarization inverts the image (mean pixel < 128 = dark background). We detect inversion, correct it, then run both Otsu and adaptive thresholding, picking the method with more white pixels. Without this, tesseract returns zero characters.
-
-**Hybrid retrieval — why BGE + BM25, not one or the other?**
-Dense embeddings catch semantic queries ("script typefaces") but miss exact keyword matches ("Cooper Black No. 282" — garbled by OCR to "Cooper Black Na, 282"). BM25 catches exact tokens but misses semantic variation. RRF fuses both ranked lists: `score = 1/(k + dense_rank) + 1/(k + bm25_rank)`. Together they improve named font retrieval from rank 2 to rank 1.
-
-**Cross-encoder reranking — why not just use the bi-encoder scores?**
-Bi-encoders (BGE-small) encode query and document independently — fast but less precise. Cross-encoders read query + document jointly, catching subtle relevance signals. We retrieve top-20 with the bi-encoder (cheap) and rerank with a cross-encoder (accurate) to get top-5. Tradeoff: adds ~200-400ms per query.
-
-**CLIP for image retrieval — why does it work?**
-CLIP was trained on 400M image-caption pairs so text and image embeddings live in the same vector space. "Show me a bold slab-serif font" encodes as a text vector; we measure cosine similarity against every page image's CLIP vector. Limitation: CLIP was not trained on typography specifically — off-the-shelf similarity scores are 0.23-0.30. Fine-tuning on a labelled typography dataset would push this higher (Phase 2).
-
-**Why 200 DPI not 300 or 600?**
-200 DPI gives ~2-3s per page OCR with acceptable accuracy on body text and font labels. 300 DPI doubles processing time with marginal accuracy gains for our content. 600 DPI is overkill — no accuracy benefit justifies 10x the time. The size tables (tiny numbers in cramped grids) still OCR poorly at 200 DPI — noted as a known limitation.
-
----
 
 ## Stack
 
