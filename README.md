@@ -19,7 +19,8 @@ Built as a portfolio project targeting the Monotype Solutions Research Engineer 
 ## Architecture
 <img width="1472" height="1520" alt="image" src="https://github.com/user-attachments/assets/58506e4f-6ae9-446b-920a-d32d8420f68e" />
 
-<img width="992" height="587" alt="image" src="https://github.com/user-attachments/assets/ccaf9db9-3f4d-4f3a-b609-afbb0e1def83" />
+<img width="1472" height="1160" alt="image" src="https://github.com/user-attachments/assets/f3e4eae5-0203-4c33-b878-dbbee73cdde1" />
+
 
 
 
